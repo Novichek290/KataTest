@@ -54,8 +54,9 @@ public class Main {
             }
 
             String[] data = text.split(regexActions[actionIndex]);
-            if (data[2]!=null) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
+            if (data.length == 3) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
             return;}
+
 
             if(Calculator.isRoman(data[0]) && !Calculator.isRoman(data[1])
             || Calculator.isRoman(data[1]) && !Calculator.isRoman(data[0]))
@@ -230,7 +231,6 @@ class Calculator
 
            if(romanKeyMap.get(romario.charAt(0))!=null) return true;
            else return false;
-
 
        }
 
