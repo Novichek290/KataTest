@@ -95,10 +95,7 @@ public class Main {
                     }
                 }
                 System.out.println(Calculator.arabToRoma(result));
-            }
-
-            if (!Calculator.isRoman(data[0]) && !Calculator.isRoman(data[1]))
-            {
+            } else {
                 double checkA = Double.parseDouble(data[0]);
                 double checkB = Double.parseDouble(data[1]);
 
@@ -135,33 +132,23 @@ public class Main {
 
 class Calculator
     {
-        static String  oper, roma;
-        static int num1, num2;
-        static int res;
-
         static HashMap<Character, Integer> romanKeyMap = new HashMap<>();
         static TreeMap<Integer, Character> arabianKeyMap = new TreeMap<>();
 
         public static String calc(int value1, int value2, String operation)
         {
-            num1 = value1;
-            num2 = value2;
-            oper = operation;
-            res = 0;
-
-            switch (oper)
+            int res = 0;
+            switch (operation)
             {
-                case "+": res = num1 + num2;
+                case "+": res = value1 + value2;
                 break;
-                case "*": res = num1 * num2;
+                case "*": res = value1 * value2;
                 break;
-                case "-": res = num1 - num2;
+                case "-": res = value1 - value2;
                 break;
-                case "/": res = num1 / num2;
+                case "/": res = value1 / value2;
 
             }
-
-
         return Integer.toString(res);
        }
 
@@ -196,16 +183,15 @@ class Calculator
         } while (arabiaNum != 0);
         return roman;
        }
-       public static int romaToArab (String romaNum) {
-           roma = romaNum;
+       public static int romaToArab (String romanNum) {
            romanKeyMap.put('I', 1);
            romanKeyMap.put('V', 5);
            romanKeyMap.put('X', 10);
            romanKeyMap.put('L', 50);
            romanKeyMap.put('C', 100);
 
-           char[] arr = roma.toCharArray();
-           int end = roma.length() - 1;
+           char[] arr = romanNum.toCharArray();
+           int end = romanNum.length() - 1;
            int result = romanKeyMap.get(arr[end]);
 
            int arabian;
