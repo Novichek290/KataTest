@@ -26,7 +26,6 @@ public class Main {
                 System.exit(0);
             }
             int actionIndex = -1;
-            int checklength=0;
             for (int i = 0; i < actions.length; i++) //опредиляем знак действия
             {
                 if (text.contains(actions[i])) {
@@ -48,13 +47,9 @@ public class Main {
                     System.out.println("ошибка ввода: Введен не верный знак действия.");
                     return;
                 }
-            } else if(checklength==2)
-            {
-                System.out.println("Ошибка ввода: В строке более двух цифр или чисел");
-            }
-
+            
             String[] data = text.split(regexActions[actionIndex]);
-            if (data.length == 3) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
+            if (data.length > 2) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
             return;}
 
 
