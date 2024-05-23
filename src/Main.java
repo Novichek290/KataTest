@@ -26,7 +26,7 @@ public class Main {
                 System.exit(0);
             }
             int actionIndex = -1;
-            int checklength=0;
+
             for (int i = 0; i < actions.length; i++) //опредиляем знак действия
             {
                 if (text.contains(actions[i])) {
