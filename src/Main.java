@@ -54,8 +54,11 @@ public class Main {
             }
 
             String[] data = text.split(regexActions[actionIndex]);
-            if (data.length == 3) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
+
+            if (data.length > 2) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
             return;}
+
+
 
 
             if(Calculator.isRoman(data[0]) && !Calculator.isRoman(data[1])
