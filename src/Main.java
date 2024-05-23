@@ -43,22 +43,15 @@ public class Main {
                 }
                 try {
                     throw new NumberFormatException();
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.out.println("ошибка ввода: Введен не верный знак действия.");
                     return;
                 }
-            } else if(checklength==2)
-            {
-                System.out.println("Ошибка ввода: В строке более двух цифр или чисел");
             }
-
             String[] data = text.split(regexActions[actionIndex]);
 
             if (data.length > 2) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
             return;}
-
-
-
 
             if(Calculator.isRoman(data[0]) && !Calculator.isRoman(data[1])
             || Calculator.isRoman(data[1]) && !Calculator.isRoman(data[0]))
