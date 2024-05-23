@@ -31,7 +31,6 @@ public class Main {
             {
                 if (text.contains(actions[i])) {
                     actionIndex = i;
-                    checklength+=1;
                 }
             }
 
