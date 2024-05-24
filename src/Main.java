@@ -26,43 +26,30 @@ public class Main {
                 System.exit(0);
             }
             int actionIndex = -1;
+            int actionCount = 0;
 
-            for (int i = 0; i < actions.length; i++) //опредиляем знак действия
+            for (int i = 0; i < actions.length; i++) //опредиляем знак действия и сколько знаков введено
             {
                 if (text.contains(actions[i])) {
                     actionIndex = i;
+                    actionCount++;
                 }
             }
 
-            if (actionIndex == -1)  //Если не нашли, то выбрасывается исключение
-            {
-                try {
-                    throw new ArrayIndexOutOfBoundsException();
-                } catch (ArrayIndexOutOfBoundsException _) {
 
-                }
-                try {
-                    throw new NumberFormatException();
-                } catch (NumberFormatException e) {
-                    System.out.println("ошибка ввода: Введен не верный знак действия.");
-                    return;
-                }
-            }
-            String[] data = text.split(regexActions[actionIndex]);
+            if (actionIndex == -1)  //Если не нашли знаков действий, то выбрасывается исключение
+            {throw new NumberFormatException();}
 
-            if (data.length > 2) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
-            return;}
+            String[] data = text.split(regexActions[actionIndex]); //создаём массив, поделённый знаком действия
+
+            if (actionCount >1 || data.length>2) {System.out.println("Ошибка ввода: В строке более двух цифр или чисел.");
+                continue;}
 
             if(Calculator.isRoman(data[0]) && !Calculator.isRoman(data[1])
-            || Calculator.isRoman(data[1]) && !Calculator.isRoman(data[0]))
-            {
-                try {
-                    throw new NumberFormatException();
-                } catch (NumberFormatException e) {
-                    System.out.println("Ошибка ввода: Вводите только арабские или только римские цифры.");
-                }
-                return;
-            } else if (Calculator.isRoman(data[0]) && Calculator.isRoman(data[1]))
+            || Calculator.isRoman(data[1]) && !Calculator.isRoman(data[0])) //Если 1 римское, а второе - арабское
+            {throw new NumberFormatException();}
+
+            else if (Calculator.isRoman(data[0]) && Calculator.isRoman(data[1])) //если оба римские
             {
                 String num1, num2;
                 num1 = data[0];
@@ -71,29 +58,14 @@ public class Main {
                 int a = Calculator.romaToArab(num1);
                 int b = Calculator.romaToArab(num2);
 
-                if (a < 1 || b < 1 || b > 10 || a >10)
-                {
-                    try
-                    {
-                        throw new NumberFormatException();
-                    } catch (NumberFormatException e) {
-                        System.out.println("Ошибка ввода: Не верный диапозон введённых значений.");
-                        return;
-                    }
-                }
+                if (a < 1 || b < 1 || b > 10 || a >10) //ограничение по диапозону
+                {throw new NumberFormatException();}
 
                 String result = Calculator.calc(a, b, actions[actionIndex]);
+
                 if (Integer.parseInt(result)<1)
-                {
-                    try
-                    {
-                        throw new NumberFormatException();
-                    } catch (NumberFormatException e)
-                    {
-                        System.out.println("Ошибка римлян: Римляне не знали чисел меньше единицы.");
-                        return;
-                    }
-                }
+                {throw new NumberFormatException();}
+
                 System.out.println(Calculator.arabToRoma(result));
             } else {
                 double checkA = Double.parseDouble(data[0]);
@@ -101,32 +73,20 @@ public class Main {
 
                 if (checkA *10%10!=0 || checkB *10%10!=0)
                 {
-                    try {
-                        throw new NumberFormatException();
-                    }
-                    catch (NumberFormatException e)
-                    {
                         System.out.println("Ошибка ввода: На ввод допустимы только целые цифры.");
-                        return;
-                    }
+                        continue;
                 }
 
                 int num1 = Integer.parseInt(data[0]); //делаем числами
                 int num2 = Integer.parseInt(data[1]);
 
                 if (num1 < 1 || num1 > 10 || num2 < 1 || num2 > 10) //ограничение на ввод по наминалу
-                {
-                    try {
-                        throw new NumberFormatException();
-                    } catch (NumberFormatException e) {
-                        System.out.println("ошибка ввода: Не верный диапозон введённых значений.");
-                        return;
-                    }
-                }
-                String result = Calculator.calc(num1, num2, actions[actionIndex]);//заставляем метод работать
+                {throw new NumberFormatException();}
+
+                String result = Calculator.calc(num1, num2, actions[actionIndex]);
                 System.out.println(result);
             }
-        } while (quit=='q');//Это правда нужно комментировать?
+        } while (quit=='q');
     }
 }
 
@@ -168,18 +128,18 @@ class Calculator
 
         do
         {
-            floorKey = arabianKeyMap.floorKey(arabiaNum);
-            ceilingKey = arabianKeyMap.ceilingKey(arabiaNum);
+            floorKey = arabianKeyMap.floorKey(arabiaNum);//Находим ближайшее снизу
+            ceilingKey = arabianKeyMap.ceilingKey(arabiaNum);//ближайшее равное или больше
             firstKey = arabianKeyMap.firstKey();
 
-            if (ceilingKey - arabiaNum == 1)
+            if (ceilingKey - arabiaNum == 1) //с какой стороны ставит I в случаях с числами V,X и тд.
             {
-                roman += arabianKeyMap.get(firstKey);
+                roman += arabianKeyMap.get(firstKey); //Например IV. Находим ближайшее наибольшее(V) и ставим слева I
                 roman += arabianKeyMap.get(ceilingKey);
                 break;
-            } else roman += arabianKeyMap.get(floorKey);
+            } else roman += arabianKeyMap.get(floorKey); //иначе первый элемент - наименьшее снизу
 
-            arabiaNum -= floorKey; //
+            arabiaNum -= floorKey;
         } while (arabiaNum != 0);
         return roman;
        }
